@@ -111,6 +111,13 @@ class PersonalInfoTable extends Component {
         // },
         cellRendererFramework: this.renderEditButton.bind(this),
       },
+      {
+        headerName: "",
+        field: "detail",
+        filter: false,
+        width: 30,
+        cellRendererFramework: this.renderDetailButton.bind(this)
+      },
 
 
     ],
@@ -195,6 +202,14 @@ class PersonalInfoTable extends Component {
     if (this.props.back) { return <React.Fragment /> }
     return <FontAwesomeIcon
       icon={faEdit}
+      onClick={() => this.props.onEditPersonalInfo(params.data.data)}
+    />;
+  }
+  renderDetailButton(params) {
+    console.log(params);
+    if (this.props.back) { return <React.Fragment /> }
+    return <FontAwesomeIcon
+      icon={faDetails}
       onClick={() => this.props.onEditPersonalInfo(params.data.data)}
     />;
   }

@@ -221,7 +221,7 @@ class App extends Component {
             localStorage.setItem("isLogin", true);
 
             // localStorage.setItem('isLogin', 'true');
-            localStorage.setItem("Account", 2);
+            localStorage.setItem("Account", 3);
             localStorage.setItem("_id",1);
             localStorage.setItem(
               "Name",
@@ -248,6 +248,7 @@ class App extends Component {
 
             history.push("#/hr/employee");
           }
+          console.log("Accc:"+decodedData.Account)
           if (decodedData.Account == 3) {
             // this.setState({ data: decodedData });
 

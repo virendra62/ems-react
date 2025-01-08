@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import "./WorkExperience.css";
+import "./Timesheet.css";
 import axios from "axios";
-import WorkExperienceTable from "./WorkExperienceTable.jsx";
-import WorkExperienceForm from "./WorkExperienceForm.jsx";
-import WorkExperienceFormEdit from "./WorkExperienceFormEdit.jsx";
-class WorkExperience extends Component {
+import TimesheetTable from "./TimesheetTable.jsx";
+import TimesheetForm from "./TimesheetForm.jsx";
+import TimesheetFormEdit from "./TimesheetFormEdit.jsx";
+class EmployeeDetail extends Component {
   state = {
     table: true,
     editForm: false,
     editData: {},
+    listData: [],
 
   };
 
@@ -20,44 +21,47 @@ class WorkExperience extends Component {
 
         {this.state.table ? (
           this.state.editForm ? (
-            <WorkExperienceFormEdit
-              onWorkExperienceEditUpdate={this.handleWorkExperienceEditUpdate}
+            <TimesheetFormEdit
+              onWorklogEditUpdate={this.handleWorklogEditUpdate}
               onFormEditClose={this.handleEditFormClose}
               editData={this.state.editData}
-
-            />
-          ) : (
-              <WorkExperienceTable
-                onAddWorkExperience={this.handleAddWorkExperience}
-                onEditWorkExperience={this.handleEditWorkExperience}
-                data={this.props.data}
-                back={this.props.back}
+              listData={this.state.listData}
+              />
+            ) : (
+              <TimesheetTable
+              onAddWorklog={this.handleAddWorklog}
+              onEditWorklog={this.handleEditWorklog}
+              data={this.props.data}
+              back={this.props.back}
+              setTimeSheetData={(data)=>this.state.listData=data}
               />
             )
         ) : (
-            <WorkExperienceForm
-              onWorkExperienceSubmit={this.handleWorkExperienceSubmit}
+            <TimesheetForm
+              onWorklogSubmit={this.handleWorklogSubmit}
               onFormClose={this.handleFormClose}
               onGenderChange={this.handleAddFormGenderChange}
+              listData={this.state.listData}
             />
           )}
       </React.Fragment>
     );
   }
-  handleWorkExperienceSubmit = event => {
+  handleWorklogSubmit = event => {
     event.preventDefault();
     console.log("id", event.target[0].value, event.target[1].value);
     this.setState({ table: true });
-console.log(this.props.data["_id"])
+
     let body = {
-      companyName: event.target[0].value,
-      designation: event.target[1].value,
-      fromDate: event.target[2].value,
-      toDate: event.target[3].value,
+
+      taskDescription: event.target[0].value,
+      entryDate: event.target[1].value,
+      projectId: event.target[2].value,
+      workHour: event.target[3].value,
       employeeId: this.props.data["_id"]
     };
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/work-experience/" + this.props.data["_id"], body, {
+      .post(process.env.REACT_APP_WORKLOG_API_URL + "/api/worklog/" + this.props.data["_id"], body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -70,16 +74,16 @@ console.log(this.props.data["_id"])
         console.log(err);
       });
   };
-  handleAddWorkExperience = () => {
+  handleAddWorklog = () => {
     console.log("clicked1");
     this.setState({ table: false });
   };
-  handleEditWorkExperience = e => {
+  handleEditWorklog = e => {
     console.log(e);
     console.log("clicked6");
     this.setState({ editForm: true });
     this.setState({ editData: e });
-    this.setState({ editFormGender: e["Gender"] })
+    //this.setState({ editFormGender: e["Gender"] })
   };
   handleFormClose = () => {
     console.log("clicked1");
@@ -93,22 +97,22 @@ console.log(this.props.data["_id"])
   //   console.log("clicked1");
   //   this.setState({ table: true });
   // };
-  handleWorkExperienceEditUpdate = (info, newInfo) => {
+  handleWorklogEditUpdate = (info, newInfo) => {
     newInfo.preventDefault();
-    console.log("Work info"+info)
-    console.log("zero data", newInfo.target[0].value);
+    console.log("zero data", info);
+    console.log(this.props)
     let body = {
-      id:  this.props.data["_id"],
-      companyName: newInfo.target[0].value,
-      designation: newInfo.target[1].value,
-      fromDate: newInfo.target[2].value,
-      toDate: newInfo.target[3].value,
+      id:  info["id"],
+      taskDescription: newInfo.target[0].value,
+      entryDate: newInfo.target[1].value,
+      projectId: newInfo.target[2].value,
+      workHour: newInfo.target[3].value,
       employeeId: info["employeeId"]
     };
     console.log("update", body);
     axios
       .put(
-        process.env.REACT_APP_API_URL + "/api/work-experience/" + info["id"],
+        process.env.REACT_APP_WORKLOG_API_URL + "/api/worklog/" + info["id"],
         body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
@@ -128,4 +132,4 @@ console.log(this.props.data["_id"])
 
 }
 
-export default WorkExperience;
+export default EmployeeDetail;

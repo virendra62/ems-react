@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import "./LeaveApplicationEmpTable.css";
+import "./TimesheetTable.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { RingLoader } from "react-spinners";
 import { css } from "@emotion/core";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
@@ -18,51 +20,40 @@ const override = css`
   border-color: red;
 `;
 
-class LeaveApplicationEmpTable extends Component {
+class TimesheetTable extends Component {
   state = {
-    leaveApplicationEmpData: [],
+    timesheetData: [],
+    projectData: [],
     loading: true,
 
     columnDefs: [
 
       {
-        headerName: "Leave type",
-        field: "Leavetype",
+        headerName: "Task Description",
+        field: "TaskDescription",
         sortable: true,
-        // width: 150,
-        // filter: true ,
-      },
-
-      {
-        headerName: "FromDate",
-        field: "FromDate",
-        sortable: true,
-        type: ["dateColumn"],
-        filter: "agDateColumnFilter",
-        // width: 150,
+        // width: 410,
         // filter: true ,
       },
       {
-        headerName: "ToDate",
-        field: "ToDate",
+        headerName: "Entry Date",
+        field: "EntryDate",
         sortable: true,
-        type: ["dateColumn"],
-        filter: "agDateColumnFilter",
-        // width: 150,
+         //width: 410,
         // filter: true ,
       },
       {
-        headerName: "Reasonforleave",
-        field: "Reasonforleave",
+        headerName: "Project",
+        field: "Project",
         sortable: true,
-        // width: 150,
+         //width: 410,
         // filter: true ,
       },
       {
-        headerName: "Status",
-        field: "Status",
+        headerName: "Work Hour(s)",
+        field: "WorkHour",
         sortable: true,
-        // width: 150,
+         //width: 410,
         // filter: true ,
       },
 
@@ -83,10 +74,9 @@ class LeaveApplicationEmpTable extends Component {
       }
     ],
     rowData: [],
-
     defaultColDef: {
       resizable: true,
-      width: 235,
+      width: 295,
       filter: "agTextColumnFilter"
       // filter: true ,
     },
@@ -94,42 +84,69 @@ class LeaveApplicationEmpTable extends Component {
       return 35;
     }
 
+
   };
-  leaveApplicationEmpObj = [];
+  timesheetObj = [];
+  projectObj = [];
   rowDataT = [];
 
 
-  loadLeaveApplicationEmpData = () => {
+  loadTimesheetData = () => {
+    console.log(this.props.data)
+    console.log("====="+process.env.REACT_APP_WORKLOG_API_URL)
+
     axios
-      .get(
-        //process.env.REACT_APP_API_URL + "/api/leave-application-emp/" +
-        process.env.REACT_APP_API_URL + "/api/education/" +
-        this.props.data["_id"], {
+    .get(process.env.REACT_APP_PROJECT_API_URL + "/api/project", {
+      headers: {
+        authorization: localStorage.getItem("token") || ""
+      }
+    })
+    .then(response => {
+      console.log("Project :: "+response.data)
+      this.projectObj = response.data;
+      console.log("response", response.data);
+      this.setState({ projectDataObj: response.data });
+      this.setState({ loading: false });
+      this.rowDataProject = [];
+      // let data=this.timesheetObj.education["0"];
+      console.log("this.projectObj", this.state.projectDataObj);
+      this.props.setTimeSheetData(this.state.projectDataObj);
+      //this.timesheetObj.map(data => {
+       
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios
+      .get(process.env.REACT_APP_WORKLOG_API_URL + "/api/worklog/" + this.props.data["_id"], {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
-      }
-      )
+      })
       .then(response => {
-        this.leaveApplicationEmpObj = response.data;
+        console.log("===<><>"+response)
+        this.timesheetObj = response.data;
         console.log("response", response.data);
-        this.setState({ leaveApplicationEmpData: response.data });
+        this.setState({ timesheetData: response.data });
         this.setState({ loading: false });
         this.rowDataT = [];
-        // let data=this.educationObj.education["0"];
-        this.leaveApplicationEmpObj.leaveApplication.map(data => {
+        // let data=this.timesheetObj.education["0"];
+        console.log("data", this.timesheetObj["entryDate"]);
+        this.timesheetObj.map(data => {
           let temp = {
             data,
-            Leavetype: data["Leavetype"],
-            FromDate: data["FromDate"].slice(0, 10),
-            ToDate: data["ToDate"].slice(0, 10),
-            Reasonforleave: data["Reasonforleave"],
-            Status: this.status(data["Status"]),
-
+            TaskDescription:data["taskDescription"],
+            EntryDate:data["entryDate"].slice(0, 10),
+            Project:data.project["name"],
+            WorkHour:data["workHour"],
+            ProjectIdData:data.project["id"]
           };
 
           this.rowDataT.push(temp);
         });
+        //this.timesheetObj.map(data => {
+         
         this.setState({ rowData: this.rowDataT });
       })
       .catch(error => {
@@ -137,17 +154,15 @@ class LeaveApplicationEmpTable extends Component {
       });
   };
 
-  onLeaveApplicationEmpDelete = (e1, e2) => {
+  onWorklogDelete = (e1, e2) => {
     console.log(e1, e2);
     if (window.confirm("Are you sure to delete this record? ") == true) {
       axios
-        .delete(
-          process.env.REACT_APP_API_URL + "/api/leave-application-emp/" + e1 + "/" + e2, {
+        .delete(process.env.REACT_APP_API_URL + "/api/education/" + e1 + "/" + e2, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }
-        }
-        )
+        })
         .then(res => {
           this.componentDidMount();
         })
@@ -157,67 +172,62 @@ class LeaveApplicationEmpTable extends Component {
     }
   };
   componentDidMount() {
-    this.loadLeaveApplicationEmpData();
+    this.loadTimesheetData();
   }
-
   renderButton(params) {
-    console.log(params);
-    return (
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() =>
-          this.onLeaveApplicationEmpDelete(this.props.data["_id"], params.data.data["_id"])
-        }
-      />
-    );
+    console.log(">>>>>>>>>>"+params.data);
+    if (this.props.back) { return <React.Fragment /> }
+    if (this.props.data["Account"] != 3) {
+      return (
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() =>
+            this.onWorklogDelete(this.props.data["_id"], params.data.data["id"])
+          }
+        />
+      );
+    } else {
+      return null;
+    }
   }
   renderEditButton(params) {
-    console.log(params);
+    console.log("params====>>",params);
+    if (this.props.back) { return <React.Fragment /> }
     return (
       <FontAwesomeIcon
         icon={faEdit}
-        onClick={() => this.onEdit(params.data.data)}
+        onClick={() => this.props.onEditWorklog(params.data.data, this.state.projectDataObj)}
       />
     );
   }
 
-  status = s => {
-    if (s == 1) {
-      return "Pending";
-    }
-    if (s == 2) {
-      return "Approved";
-    }
-    if (s == 3) {
-      return "Rejected";
-    }
-  };
-  onEdit = data => {
-    if (data["Status"] == 1) {
-      this.props.onEditLeaveApplicationEmp(data);
-    } else {
-      window.alert(
-        "You can not edit application after it approved or rejected"
-      );
-    }
-  };
-
   render() {
+
+    console.log("All>>>>>>>", this.state)
+
     return (
       <div id="table-outer-div-scroll">
-        <h2 id="role-title">Leave Application</h2>
+        <h2 id="role-title">Employee TimeSheet Details {this.props.back ? "of " + this.props.data["FirstName"] + " " + this.props.data["LastName"] : ""}</h2>
 
-        <Button
+        { this.props.back ? (<Link to="/hr/employee">
+          <Button
+            variant="primary"
+            id="add-button"
+          >
+            Back
+        </Button>
+        </Link>) : <Button
           variant="primary"
           id="add-button"
-          onClick={this.props.onAddLeaveApplicationEmp}
+          onClick={this.props.onAddWorklog}
         >
-          <FontAwesomeIcon icon={faPlus} id="plus-icon" />
-          Add
-        </Button>
+            <FontAwesomeIcon icon={faPlus} id="plus-icon" />
+            Add
+        </Button>} 
+
+
 
         <div id="clear-both" />
-
 
         {!this.state.loading ? (
           <div
@@ -255,10 +265,9 @@ class LeaveApplicationEmpTable extends Component {
           )}
 
 
-
       </div>
     );
   }
 }
 
-export default LeaveApplicationEmpTable;
+export default TimesheetTable;

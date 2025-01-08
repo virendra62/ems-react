@@ -95,7 +95,8 @@ class FamilyInfoTable extends Component {
 
   loadFamilyInfoData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/family-info/" + this.props.data["_id"], {
+      .get(process.env.REACT_APP_API_URL + "/api/education/" + this.props.data["_id"], {
+        //.get(process.env.REACT_APP_API_URL + "/api/family-info/" + this.props.data["_id"], {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

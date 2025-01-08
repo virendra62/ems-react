@@ -101,6 +101,7 @@ class EducationTable extends Component {
         }
       })
       .then(response => {
+        console.log("===<><>"+response)
         this.educationObj = response.data;
         console.log("response", response.data);
         this.setState({ educationData: response.data });
@@ -152,16 +153,20 @@ class EducationTable extends Component {
     this.loadEducationData();
   }
   renderButton(params) {
-    console.log(params);
+    console.log(">>>>>>>>>>"+params.data);
     if (this.props.back) { return <React.Fragment /> }
-    return (
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() =>
-          this.onEducationDelete(this.props.data["_id"], params.data.data["_id"])
-        }
-      />
-    );
+    if (this.props.data["Account"] != 3) {
+      return (
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() =>
+            this.onEducationDelete(this.props.data["_id"], params.data.data["id"])
+          }
+        />
+      );
+    } else {
+      return null;
+    }
   }
   renderEditButton(params) {
     console.log(params);

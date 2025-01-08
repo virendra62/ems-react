@@ -8,10 +8,10 @@ class WorkExperienceForm extends Component {
   state = {
     // WorkExperienceData: this.props.editData["WorkExperienceName"],
 
-    CompanyNameData: this.props.editData["CompanyName"],
-    DesignationData: this.props.editData["Designation"],
-    FromDateData: this.props.editData["FromDate"].slice(0, 10),
-    ToDateData: this.props.editData["ToDate"].slice(0, 10),
+    CompanyNameData: this.props.editData["companyName"],
+    DesignationData: this.props.editData["designation"],
+    FromDateData: this.props.editData["fromDate"].slice(0, 10),
+    ToDateData: this.props.editData["toDate"].slice(0, 10),
   };
   onCompanyNameDataChange(e) {
     this.setState({ CompanyNameData: e.target.value });

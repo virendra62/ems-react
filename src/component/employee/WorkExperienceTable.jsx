@@ -108,13 +108,13 @@ class WorkExperienceTable extends Component {
         this.setState({ loading: false });
         this.rowDataT = [];
         // let data=this.educationObj.education["0"];
-        this.workExperienceObj.workExperience.map(data => {
+        this.workExperienceObj.map(data => {
           let temp = {
             data,
-            CompanyName:data["CompanyName"],
-            Designation:data["Designation"],
-            FromDate:data["FromDate"].slice(0, 10),
-            ToDate:data["ToDate"].slice(0, 10),
+            CompanyName:data["companyName"],
+            Designation:data["designation"],
+            FromDate:data["fromDate"].slice(0, 10),
+            ToDate:data["toDate"].slice(0, 10),
             
           };
 
@@ -150,14 +150,18 @@ class WorkExperienceTable extends Component {
   renderButton(params) {
     console.log(params);
     if(this.props.back){return <React.Fragment/>}
-    return (
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() =>
-          this.onWorkExperienceDelete(this.props.data["_id"],params.data.data["_id"])
-        }
-      />
-    );
+    if (this.props.data["Account"] != 3) {
+      return (
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() =>
+            this.onWorkExperienceDelete(this.props.data["_id"],params.data.data["_id"])
+          }
+        />
+      );
+    } else {
+      return  null;
+    }
   }
   renderEditButton(params) {
     console.log(params);

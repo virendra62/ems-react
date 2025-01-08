@@ -9,6 +9,7 @@ import Education from "./Education.jsx";
 import FamilyInfo from "./FamilyInfo.jsx";
 import WorkExperience from "./WorkExperience.jsx";
 import LeaveApplicationEmp from "./LeaveApplicationEmp.jsx";
+import EmpTimesheet from "./Timesheet.jsx";
 import NotFound404 from "../NotFound404.jsx";
 
 
@@ -129,6 +130,17 @@ class DashboardHR extends Component {
                     Leave Application
                   </Link>
                 </li>
+                <li>
+                  <Link to={
+                      "/employee/" + this.props.data["_id"] + "/emp-timesheet"
+                    }>
+                    <FontAwesomeIcon
+                      icon={faFileAlt}
+                      className="sidebar-icon"
+                    />
+                    Time Sheet
+                  </Link>
+                </li>
               </ul>
             </div>
             {/* <div id="sidebar-top-content" /> */}
@@ -166,6 +178,11 @@ class DashboardHR extends Component {
                   exact
                   path="/employee/:id/leave-application-emp"
                   render={props => <LeaveApplicationEmp data={this.props.data} />}
+                />
+                <Route
+                  exact
+                  path="/employee/:id/emp-timesheet"
+                  render={props => <EmpTimesheet data={this.props.data} />}
                 />
                
                 {/* <Route
