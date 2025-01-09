@@ -11,7 +11,7 @@ class DepartmentForm extends Component {
   companyData = [];
   loadCompanyInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/company", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/companies", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

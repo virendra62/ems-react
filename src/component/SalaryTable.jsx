@@ -114,7 +114,7 @@ class AdminSalaryTable extends Component {
 
   loadSalaryData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/salary", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/salaries", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -155,7 +155,7 @@ class AdminSalaryTable extends Component {
     console.log(e);
     if (window.confirm("Are you sure to delete this record? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/salary/" + e, {
+        .delete(process.env.REACT_APP_HR_API_URL + "/api/salary/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }

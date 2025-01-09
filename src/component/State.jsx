@@ -63,17 +63,19 @@ class State extends Component {
   }
   handleStateSubmit = event => {
     event.preventDefault();
+    console.log("event.target :: ", event);
     console.log("id", event.target[0].value, event.target[1].value);
     this.setState({ table: true });
 
     let body = {
-      CountryID: event.target[0].value,
-      StateName: event.target[1].value
+      //CountryID: event.target[0].value,
+      countryName: event.target[0].value,
+      stateName: event.target[1].value
     };
     //  let body= "CompanyID=" + event.target[0].value + "&State=" + event.target[1].value;
     //  let body= "FenilKaneria";
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/state", body, {
+      .post(process.env.REACT_APP_HR_API_URL + "/api/state", body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -120,7 +122,7 @@ class State extends Component {
     };
     console.log("update", body);
     axios
-      .put(process.env.REACT_APP_API_URL + "/api/state/" + info["_id"], body, {
+      .put(process.env.REACT_APP_HR_API_URL + "/api/state/" + info["_id"], body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

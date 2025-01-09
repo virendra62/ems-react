@@ -8,20 +8,20 @@ class EmployeeFormEdit extends Component {
     roleData: [],
     positionData: [],
     departmentData: [],
-    GenderData: this.props.editData["Gender"],
+    GenderData: this.props.editData["gender"],
 
-    EmailData: this.props.editData["Email"],
+    EmailData: this.props.editData["email"],
     // PasswordData: "",
 
-    FirstNameData: this.props.editData["FirstName"],
-    MiddleNameData: this.props.editData["MiddleName"],
-    LastNameData: this.props.editData["LastName"],
-    DOBData: this.props.editData["DOB"].slice(0, 10),
-    ContactNoData: this.props.editData["ContactNo"],
-    EmployeeCodeData: this.props.editData["EmployeeCode"],
+    FirstNameData: this.props.editData["firstName"],
+    MiddleNameData: this.props.editData["middleName"],
+    LastNameData: this.props.editData["lastName"],
+    DOBData: this.props.editData["dob"].slice(0, 10),
+    ContactNoData: this.props.editData["phone"],
+    EmployeeCodeData: this.props.editData["empId"],
 
-    DateOfJoiningData: this.props.editData["DateOfJoining"].slice(0, 10),
-    TerminateDateData: this.props.editData["TerminateDate"].slice(0, 10)
+    //DateOfJoiningData: this.props.editData["DateOfJoining"].slice(0, 10), //TODO
+    //TerminateDateData: this.props.editData["TerminateDate"].slice(0, 10) //TODO
 
     // value={this.state.EmployeeTitleData}
     // onChange={value => this.onEmployeeTitleDataChange(value)}

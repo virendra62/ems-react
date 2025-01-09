@@ -26,7 +26,7 @@ class CountryTable extends Component {
     columnDefs: [
       {
         headerName: "Country",
-        field: "CountryName",
+        field: "countryName",
         sortable: true
         // width: 150,
         // filter: true ,
@@ -64,7 +64,7 @@ class CountryTable extends Component {
   // countryDataArray;
   loadCountryData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/country", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/countries", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -82,7 +82,7 @@ class CountryTable extends Component {
         this.countryObj.map(data => {
           let temp = {
             data,
-            CountryName: data["CountryName"]
+            countryName: data["countryName"]
           };
 
           this.rowDataT.push(temp);
@@ -95,11 +95,11 @@ class CountryTable extends Component {
   };
 
   onCountryDelete = e => {
-    console.log(e);
+    console.log("onCountryDelete :: " + e);
     // let body= "ID=" + e;
     if (window.confirm("Are you sure to delete this record ? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/country/" + e, {
+        .delete(process.env.REACT_APP_HR_API_URL + "/api/country/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }
@@ -121,11 +121,11 @@ class CountryTable extends Component {
     this.loadCountryData();
   }
   renderButton(params) {
-    console.log(params);
+    console.log("params :: " + params.data.data);
     return (
       <FontAwesomeIcon
         icon={faTrash}
-        onClick={() => this.onCountryDelete(params.data.data["_id"])}
+        onClick={() => this.onCountryDelete(params.data.data["id"])}
       />
     );
   }

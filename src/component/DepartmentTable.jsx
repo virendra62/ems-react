@@ -77,7 +77,7 @@ class DepartmentTable extends Component {
 
   loadDepartmentData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/department", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/departments", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -111,7 +111,7 @@ class DepartmentTable extends Component {
     console.log(e);
     if (window.confirm("Are you sure to delete this record ? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/department/" + e, {
+        .delete(process.env.REACT_APP_HR_API_URL + "/api/department/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }

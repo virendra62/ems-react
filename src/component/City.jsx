@@ -94,7 +94,7 @@ class City extends Component {
     };
 
     axios
-      .put(process.env.REACT_APP_API_URL + "/api/city/" + info["_id"], body, {
+      .put(process.env.REACT_APP_HR_API_URL + "/api/city/" + info["_id"], body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

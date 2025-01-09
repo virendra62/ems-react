@@ -209,7 +209,7 @@ class PersonalInfoTable extends Component {
     console.log(params);
     if (this.props.back) { return <React.Fragment /> }
     return <FontAwesomeIcon
-      icon={faDetails}
+      icon={faEdit}
       onClick={() => this.props.onEditPersonalInfo(params.data.data)}
     />;
   }

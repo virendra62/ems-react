@@ -56,7 +56,7 @@ class SalaryFormEdit extends Component {
       
       loadSalaryInfo = () => {
         axios
-          .get(process.env.REACT_APP_API_URL + "/api/salary", {
+          .get(process.env.REACT_APP_HR_API_URL + "/api/salaries", {
             headers: {
               authorization: localStorage.getItem("token") || ""
             }

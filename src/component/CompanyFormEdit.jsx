@@ -63,7 +63,7 @@ class CompanyFormEdit extends Component {
 
   loadCountryInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/country", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/countries", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -77,7 +77,7 @@ class CompanyFormEdit extends Component {
   };
   loadStateInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/state", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/states", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -91,7 +91,7 @@ class CompanyFormEdit extends Component {
   };
   loadCityInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/city", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/cities", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

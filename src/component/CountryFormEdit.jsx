@@ -6,7 +6,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 
 class CountryForm extends Component {
   state = {
-    CountryData: this.props.editData["CountryName"]
+    CountryData: this.props.editData["countryName"]
   };
   onChange(e) {
     this.setState({ CountryData: e.target.value });
@@ -36,7 +36,7 @@ class CountryForm extends Component {
                 <Form.Control
                   type="Text"
                   placeholder="Country"
-                  name="CountryName"
+                  name="countryName"
                   required
                   value={this.state.CountryData}
                   onChange={value => this.onChange(value)}

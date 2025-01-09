@@ -221,7 +221,7 @@ class App extends Component {
             localStorage.setItem("isLogin", true);
 
             // localStorage.setItem('isLogin', 'true');
-            localStorage.setItem("Account", 3);
+            localStorage.setItem("Account", 2); //1=Admin, 2=HR, 3=Employee //TODO
             localStorage.setItem("_id",1);
             localStorage.setItem(
               "Name",

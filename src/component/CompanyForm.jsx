@@ -16,7 +16,7 @@ class CompanyForm extends Component {
 
   loadCountryInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/country", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/countries", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -30,7 +30,7 @@ class CompanyForm extends Component {
   };
   loadStateInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/state", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/states", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

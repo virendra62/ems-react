@@ -67,12 +67,12 @@ class Country extends Component {
     this.setState({ table: true });
 
     let body = {
-      CountryName: event.target[0].value
+      countryName: event.target[0].value
     };
     //  let body= "CompanyID=" + event.target[0].value + "&Country=" + event.target[1].value;
     //  let body= "FenilKaneria";
     axios
-      .post(process.env.REACT_APP_API_URL + "/api/country", body, {
+      .post(process.env.REACT_APP_HR_API_URL + "/api/country", body, {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -111,16 +111,20 @@ class Country extends Component {
     this.setState({ table: true });
   };
   handleCountryEditUpdate = (info, newInfo) => {
+    console.log("info :: ",info);
+    console.log("newInfo :: ",newInfo.target[0].value);
     // this.setState({ table: true });
     let body = {
       // ...info,CompanyID:formData1,Country:formData2
       //   CompanyID: formData1,
-      CountryName: newInfo.target[0].value,
-      //   CountryID: info["CountryID"]
+      //countryName: newInfo.target[0].value, //TODO
+      countryName: newInfo.target[0].value,
+      //countryID: info.id
     };
     console.log("update", body);
     axios
-      .put(process.env.REACT_APP_API_URL + "/api/country/" + info["_id"], body, {
+      //.put(process.env.REACT_APP_HR_API_URL + "/api/country/" + info["_id"], body, { //TODO
+      .put(process.env.REACT_APP_HR_API_URL + "/api/country/" + info.id, body, { 
         headers: {
           authorization: localStorage.getItem("token") || ""
         }

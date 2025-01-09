@@ -11,7 +11,7 @@ class StateForm extends Component {
   countryData = [];
   loadCountryInfo = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/country", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/countries", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -45,7 +45,7 @@ class StateForm extends Component {
                     Select your option
                   </option>
                   {this.countryData.map((data, index) => (
-                    <option value={data["_id"]}>{data["CountryName"]}</option>
+                    <option value={data["id"]}>{data["countryName"]}</option>
                   ))}
                 </Form.Control>
               </Col>

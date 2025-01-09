@@ -79,7 +79,7 @@ class StateTable extends Component {
   // stateDataArray;
   loadStateData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/state", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/states", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -116,7 +116,7 @@ class StateTable extends Component {
     // let body= "ID=" + e;
     if (window.confirm("Are you sure to delete this record ? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/state/" + e, {
+        .delete(process.env.REACT_APP_HR_API_URL + "/api/state/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }

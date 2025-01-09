@@ -74,7 +74,7 @@ class CityTable extends Component {
   // stateDataArray;
   loadCityData = () => {
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/city", {
+      .get(process.env.REACT_APP_HR_API_URL + "/api/cities", {
         headers: {
           authorization: localStorage.getItem("token") || ""
         }
@@ -111,7 +111,7 @@ class CityTable extends Component {
     // let body= "ID=" + e;
     if (window.confirm("Are you sure to delete this record ? ") == true) {
       axios
-        .delete(process.env.REACT_APP_API_URL + "/api/city/" + e, {
+        .delete(process.env.REACT_APP_HR_API_URL + "/api/city/" + e, {
           headers: {
             authorization: localStorage.getItem("token") || ""
           }

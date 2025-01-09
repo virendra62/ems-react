@@ -201,19 +201,22 @@ class AdminEmployeeTable extends Component {
         this.employeeObj.map(data => {
           let temp = {
             data,
-            Email: data["Email"],
+            Email: data["email"],
             Password: data["Password"],
             Account: data["Account"] == 1 ? "Admin" : (data["Account"] == 2 ? "HR" : (data["Account"] == 3 ? "Employee" : "")),
             RoleName: data["role"][0]["RoleName"],
-            FirstName: data["name"],
-            MiddleName: data["MiddleName"],
-            LastName: data["LastName"],
-            DOB: data["DOB"].slice(0, 10),
-            ContactNo: data["ContactNo"],
-            EmployeeCode: data["EmployeeCode"],
-            DepartmentName: data["department"][0]["DepartmentName"],
-            PositionName: data["position"][0]["PositionName"],
-            DateOfJoining: data["DateOfJoining"].slice(0, 10)
+            FirstName: data["firstName"],
+            MiddleName: data["middleName"],
+            LastName: data["lastName"],
+            //DOB: data["DOB"].slice(0, 10),
+            DOB: data["dob"].slice(0, 10) || "Not Avaiable",
+            ContactNo: data["phone"],
+            EmployeeCode: data["empId"],
+            //DepartmentName: data["department"][0]["DepartmentName"],  //TODO
+            PositionName: data["position"],
+            //PositionName: data["position"][0]["PositionName"],            
+            //DateOfJoining: data["DateOfJoining"].slice(0, 10)  //TODO
+            RoleName: data["role"],
           };
 
           this.rowDataT.push(temp);
